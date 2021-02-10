@@ -1,0 +1,40 @@
+=transform($property) 
+  -webkit-transform: $property
+  -moz-transform: $property
+  -ms-transform: $property
+  transform: $property
+
+=keyframes($name)
+  @-webkit-keyframes #{$name}
+    @content
+  @-moz-keyframes #{$name}
+    @content
+  @-ms-keyframes #{$name}
+    @content
+  @keyframes #{$name}
+    @content
+
+.scrollingText
+  height: 15px
+  overflow: hidden
+  position: fixed
+  width: 100%
+  bottom: 100
+
+.scrollingText p
+  position: absolute
+  width: 100%
+  height: 100%
+  margin: 0
+  line-height: 15px
+  text-align: center
+  // Starting Position
+  +transform(translateX(100%))
+  //Apply animation to element
+  +transform(animation(scrollingText 15s linear infinite))
+  //Apply movement
+  +keyframes(scrollingText)
+    0%
+      +transform(translateX(100%))
+    100%
+      +transform(transtaleX(-100%))

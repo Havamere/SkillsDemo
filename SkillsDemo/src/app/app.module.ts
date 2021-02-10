@@ -10,6 +10,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { UserService } from './user.service';
+import { JokeScrollComponent } from './components/home/joke-scroll/joke-scroll.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { UserService } from './user.service';
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    ContactComponent
+    ContactComponent,
+    JokeScrollComponent
   ],
   imports: [
     BrowserModule,

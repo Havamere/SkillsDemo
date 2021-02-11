@@ -1,20 +1,15 @@
-<div class='box scrollingText'>
-	<div *ngFor="let joke of jokesArr; let i = index"> 
-		<div class="nowrap" *ngIf="joke.type == 'twopart'">
-			 <p style="background-color: black; margin-left: calc({{ joke.length }} + 5)px">Q: {{ joke.setup }} A: {{ joke.delivery }} </p>
-		</div>
-		<div class="nowrap" *ngIf="joke.type == 'single'"> 
-			<p style="background-color: black; margin-left: calc({{ joke.length }} + 5)px"> {{ joke.joke }} </p>
-		</div>
+<div class='box scrollingText' *ngFor="let joke of jokesArr">
+	<div class="nowrap" *ngIf="joke.type == 'twopart'">
+		 <p>Q: {{ joke.setup }} A: {{ joke.delivery }} </p>
+	</div>
+	<div class="nowrap" *ngIf="joke.type == 'single'"> 
+		<p> {{ joke.joke }} </p>
 	</div>
 </div> 
 <!-- currently recieving data after this loads, causing error -->
 
 <!-- Styles -->	
 <style>
-.calc-left {
-
-}
 
 .nowrap {
   white-space: nowrap ;

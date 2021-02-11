@@ -11,7 +11,7 @@ export class JokesService {
   constructor(private http: HttpClient) {}
 
   //optional filters
-  numJokes = 5;
+  numJokes = 2;
   //add more than one category using comma separation
   categories = 'Programming'; //options: Programming,Misc,Dark,Pun,Spooky,Christmas or 'Any' for all categories
   //add more than one flag using comma separation
@@ -23,7 +23,7 @@ export class JokesService {
   				.get<any[]>(`${this.apiURL}${this.categories}?blacklistFlags=${this.blacklistFlags}&amount=${this.numJokes}`)
   				.pipe(map(data => {
 						const jokesArr = [];
-						for (let i=0; i<10; i++) {
+						for (let i=0; i<this.numJokes; i++) {
 							jokesArr.push(data['jokes'][i]);
 						}
 						return jokesArr;

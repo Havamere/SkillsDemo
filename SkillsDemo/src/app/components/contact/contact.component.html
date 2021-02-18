@@ -10,6 +10,7 @@
 
 <section class="section">
 	<div class="container">
+		<button (ngSubmit)="sendText()" type="submit" class="button is-info is-large"> Send Text </button>
 
 		<!-- form goes here -->
 		<form (ngSubmit)="processForm()">
@@ -27,19 +28,19 @@
 					Name is required and needs to be at least 3 characters long. You can input more than one name.
 				</div>
 			</div>
-			<!-- email -->
+			<!-- phone number -->
 			<div class="field">
 				<input 
-					type="email" 
-					name="email" 
+					type="phone" 
+					name="phone" 
 					class="input" 
-					placeholder="Your Email" 
-					[(ngModel)]="email" 
+					placeholder="Your phone number" 
+					[(ngModel)]="phone" 
 					required 
-					email
-					#emailInput="ngModel">
-				<div class="help is-error" *ngIf="emailInput.invalid && emailInput.dirty">
-					Valid emails only please.
+					phoneNumber
+					#phoneInput="ngModel">
+				<div class="help is-error" *ngIf="phoneInput.invalid && phoneInput.dirty">
+					Valid phone numbers only please.
 				</div>
 			</div>
 

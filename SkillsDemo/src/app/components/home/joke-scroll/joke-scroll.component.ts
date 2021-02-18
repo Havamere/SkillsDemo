@@ -11,14 +11,12 @@ export class JokeScrollComponent implements OnInit {
 
   jokesArr;
 
-  dataReady:boolean = false;
-
   constructor(private jokesService: JokesService) { }
 
   ngOnInit(): void {
-  	function getTypeName(val) {
-    	return {}.toString.call(val).slice(8, -1);
-	}
+ //  	function getTypeName(val) {
+ //    	return {}.toString.call(val).slice(8, -1);
+ // }
 
   	this.jokesService.getJokes().subscribe(data => this.jokesArr = data);
   												//console.log("Payload = ", getTypeName(data), data);

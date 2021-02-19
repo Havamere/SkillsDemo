@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import * as TeleSignSDK from '../../node_modules/telesignsdk';
+//import * as TeleSignSDK from '../../node_modules/telesignsdk';
   	// declare function require(name:string);
 
 @Injectable({

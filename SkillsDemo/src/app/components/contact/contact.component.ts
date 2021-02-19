@@ -14,7 +14,7 @@ export class ContactComponent implements OnInit {
   message: string;
   // messageType: string;
 
-  constructor(private telesignService: TelesignService) { }
+  constructor() { }
 
   ngOnInit(): void {}
 

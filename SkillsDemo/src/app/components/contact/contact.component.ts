@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TelesignService } from '../../telesign.service';
+//import { TelesignService } from '../../telesign.service';
 
 @Component({
   selector: 'app-contact',
@@ -44,7 +44,8 @@ export class ContactComponent implements OnInit {
   }
 
   sendText() {
-    console.log("sending text")
+    console.log("sending text");
+    alert("Text sent!");
   }
 
 }

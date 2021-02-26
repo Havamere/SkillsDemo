@@ -1,0 +1,56 @@
+<div class="container message-box">
+	<h2>Enter message to the chat.</h2>
+
+	<input 
+		class="input is-warning" 
+		type="text" 
+		placeholder="e.g. Hello there!" 
+		[(ngModel)]="enteredTitle">
+	<textarea 
+		class="textarea is-primary" 
+		placeholder="e.g. General Kenobi! *lightsaber noises*" 
+		rows="6" 
+		[(ngModel)]="enteredContent">
+	</textarea>
+	<hr>
+	<div class="select">
+	  <select [(ngModel)]="selectedColor"> <!--currently not shoing text on load, selections are still available and color picking works-->
+	    <option [value]="'is-white'">
+	    	<p>Message Color</p>
+	    </option>
+	    <option [value]="'is-primary'"
+	    		style="background-color: hsl(171, 100%, 41%)">
+	        <p>Aqua</p> 
+	    </option>
+	    <option [value]="'is-dark'"
+	    		style="background-color: hsl(0, 0%, 21%)">
+	        <p style="color: hsl(0, 0%, 96%)">Black</p>
+	    </option>
+	    <option [value]="'is-link'"
+	    		style="background-color: hsl(217, 71%, 53%)">
+	        <p>Dark Blue</p> 
+	    </option>
+	    <option [value]="'in-info'"
+	    		style="background-color: hsl(204, 86%, 53%)">
+	        <p>Light Blue</p> 
+	    </option>
+	    <option [value]="'is-success'"
+	    		style="background-color: hsl(141, 53%, 53%)">
+	        <p>Green</p> 
+	    </option>
+	    <option [value]="'is-warning'"
+	    		style="background-color: hsl(48, 100%, 67%)">
+	        <p style="color: rgba(0, 0, 0, 0.7)">Orange</p> 
+	    </option>
+	    <option [value]="'is-danger'"
+	    		style="background-color: hsl(348, 100%, 61%)"> 
+	        <p>Red</p> 
+	    </option>
+	  </select>
+	</div>
+	<button 
+		class="button is-small is-warning is-rounded is-pulled-right" 
+		(click)="onAddMessage()">
+			Save Message
+	</button>
+</div>

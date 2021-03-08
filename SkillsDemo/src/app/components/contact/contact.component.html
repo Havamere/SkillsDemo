@@ -10,10 +10,9 @@
 
 <section class="section">
 	<div class="container">
-		<button (click)="sendText()" type="button" class="button is-info is-medium"> Send Text </button>
 
 		<!-- form goes here -->
-		<form (ngSubmit)="processForm()">
+		<form (submit)="onSendText(textForm)" #textForm="ngForm">
 			<!-- name -->
 			<div class="field">
 				<input 
@@ -35,7 +34,7 @@
 					name="phone" 
 					class="input" 
 					placeholder="Your phone number" 
-					[(ngModel)]="phone" 
+					[(ngModel)]="phoneNumber" 
 					required 
 					phoneNumber
 					#phoneInput="ngModel">
@@ -59,8 +58,8 @@
 				</div>
 			</div>
 
-			<button type="submit" class="button is-danger is-large">Submit</button>
-
+			<button type="Submit" class="button is-info is-medium is-pulled-right"> Send Text </button>
+			<!-- <button type="submit" class="button is-danger is-large">Submit</button> -->
 		</form>
 	</div>
 </section>

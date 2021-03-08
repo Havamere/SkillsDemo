@@ -1,35 +1,39 @@
 <div class="container message-box">
 	<h2>Enter message to the chat.</h2>
-
-	<input 
-		class="input is-warning" 
-		type="text" 
-		placeholder="e.g. Hello there!" 
-		[(ngModel)]="enteredTitle">
-	<textarea 
-		class="textarea is-primary" 
-		placeholder="e.g. General Kenobi! *lightsaber noises*" 
-		rows="6" 
-		[(ngModel)]="enteredContent">
-	</textarea>
-	<hr>
-	<div class="container">
-		<p class="intro is-pulled-left"> Pick a color!:&nbsp;&nbsp;</p>
-		<div class="select is pulled-left">
-		  <select [(ngModel)]="selectedColor"> 
-		  	<option *ngFor="let color of messageColorArray" 
-		  			value="{{color.value}}"
-		  			style="{{color.style}}">
-		  		<p style='color:{{color.font_color}}'>
-		  			{{color.name}}
-		  		</p>
-		  	</option>
-		  </select>
+	<form (submit)="onAddMessage(messageForm)" #messageForm="ngForm">
+		<input 
+			class="input is-warning" 
+			type="text" 
+			placeholder="Message Title: e.g. Hello there!" 
+			name=title
+			ngModel
+			required>
+		<textarea 
+			class="textarea is-primary" 
+			placeholder="Message Content: e.g. General Kenobi! *lightsaber noises*" 
+			rows="6" 
+			name="content"
+			ngModel
+			required>
+		</textarea>
+		<hr>
+		<div class="container">
+			<p class="intro is-pulled-left"> Pick a color!:&nbsp;&nbsp;</p>
+			<div class="select is pulled-left">
+			  <select name="color" 
+			  		  ngModel
+			  		  required> 
+			  	<option *ngFor="let color of messageColorArray" 
+			  			value="{{color.value}}"
+			  			style="{{color.style}}">
+			  		<p>{{color.name}}</p>
+			  	</option>
+			  </select>
+			</div>
+			<button class="button is-small is-warning is-rounded is-pulled-right" 
+					type="Submit">
+					Save Message
+			</button>
 		</div>
-		<button 
-			class="button is-small is-warning is-rounded is-pulled-right" 
-			(click)="onAddMessage()">
-				Save Message
-		</button>
-	</div>
+	</form>
 </div>

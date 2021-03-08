@@ -11,7 +11,7 @@ export class JokesService {
   constructor(private http: HttpClient) {}
 
   //optional filters
-  numJokes = 3;
+  numJokes = 2;
   //add more than one category using comma separation
   categories = 'Programming'; //options: Programming,Misc,Dark,Pun,Spooky,Christmas or 'Any' for all categories
   //add more than one flag using comma separation

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-//import { TelesignService } from '../../telesign.service';
+import { NgForm } from '@angular/forms';
+
+import { TextService } from './text.service';
 
 @Component({
   selector: 'app-contact',
@@ -7,45 +9,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./contact.component.sass']
 })
 
-export class ContactComponent implements OnInit {
+export class ContactComponent {
 
   name: string;
-  phone: string;
+  phoneNumber: string;
   message: string;
-  // messageType: string;
 
-  constructor() { }
+  constructor(public textService: TextService) { }
 
-  ngOnInit(): void {}
-
-  /*
-	Process the form we have. Send to whatever backend.
-	Only alerting for now.
-  */
-  // phone = "14076979151";
-  // message = "It works!  You did it!";
-  // messageType = "ARN";
-  // name = "Kyle R.";
-
-  // function messageCallback(error, responseBody) {
-  //     if (error === null) {
-  //         console.log(`Messaging response for messaging phone number: ${this.phone}` +
-  //             ` => code: ${responseBody['status']['code']}` +
-  //             `, description: ${responseBody['status']['description']}`);
-  //     } else {
-  //         console.error("Unable to send message. " + error);
-  //     }
-  // }
-
-  processForm() {
-  	//this.telesignService.client.sms.message(this.messageCallback, this.phone, this.message, this.messageType);
-    //console.log("## MessagingClient.message ##");
-    console.log("button pressed");
-  }
-
-  sendText() {
+  onSendText(form: NgForm) {
     console.log("sending text");
     alert("Text sent!");
+    this.textService.outgoingText(form.value.name, form.value.phoneNumber, form.value.message);
+    form.resetForm();
   }
 
 }

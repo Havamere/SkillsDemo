@@ -31,11 +31,11 @@
               "src/assets"
             ],
             "styles": [
-              "../node_modules/bulma/css/bulma.css",
+              "./node_modules/bulma/css/bulma.css",
               "src/styles.sass"
             ],
             "scripts": [
-              //"../node_modules/telesignsdk/src/TeleSign.js"
+              //"./node_modules/telesignsdk/src/TeleSign.js"
             ]
           },
           "configurations": {

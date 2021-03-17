@@ -1,0 +1,9 @@
+{
+	"env": {
+		"MONGO_ATLAS_PW": "ecL0v1QCYbJ7Bpr5",
+		"customerId": "73C691D6-7233-46C1-8CA8-F769ADBF32E4",
+		"apiKey": "ipYLzQFmrYpFZzH5FPfarPjEzpPae9xhjlBdRuzC4qXY1i/Re+ICgo3oYlh0XLD9Y4teMbAjAWpVJ7QAC0KbgQ==",
+		"rest_endpoint": "https://rest-api.telesign.com",
+		"phoneNumber": "14076979151"
+	}
+}

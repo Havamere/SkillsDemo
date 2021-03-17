@@ -30,13 +30,13 @@
 			<!-- phone number -->
 			<div class="field">
 				<input 
-					type="phone" 
-					name="phone" 
+					type="tel" 
+					name="phoneNumber" 
 					class="input" 
-					placeholder="Your phone number" 
+					placeholder="Your phone number e.g. 1-234-567-8910" 
 					[(ngModel)]="phoneNumber" 
+					pattern="[0-9]{1}-[0-9]{3}-[0-9]{3}-[0-9]{4}"
 					required 
-					phoneNumber
 					#phoneInput="ngModel">
 				<div class="help is-error" *ngIf="phoneInput.invalid && phoneInput.dirty">
 					Valid phone numbers only please.

@@ -12,11 +12,8 @@ export class TextService {
 	outgoingText( name: string, phoneNumber: string, message: string) {
 
 		const text: Text = {name: name,	phoneNumber: phoneNumber, message: message};
-		
-		console.log("attempting text");
-		this.http.post('http://localhost:3000/api/text', text);
-		console.log("did it work?");
+
+		this.http.post<{text: string}>('http://localhost:3000/api/text', text)
+				 .subscribe(text => { console.log(text) }, err=> {console.log(err) });
 	}
 }
-
-//look into using a telesign service to import credentials, or change post url's to telesign endpoints

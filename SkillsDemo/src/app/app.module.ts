@@ -13,7 +13,6 @@ import { MessageBoardComponent } from './components/message-board/message-board.
 import { MessageCreateComponent } from './components/message-board/message-create/message-create.component';
 import { MessageListComponent } from './components/message-board/message-list/message-list.component';
 import { ContactComponent } from './components/contact/contact.component';
-import { UserService } from './user.service';
 import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
@@ -35,9 +34,7 @@ import { FooterComponent } from './components/footer/footer.component';
     FontAwesomeModule,
     HttpClientModule
   ],
-  providers: [
-    UserService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

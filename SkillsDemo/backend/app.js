@@ -7,9 +7,12 @@ const TeleSignSDK = require('telesignsdk');
 
 const app = express();
 
+
 // Message Board Application
 mongoose.connect(
-		"mongodb+srv://Havamere:ecL0v1QCYbJ7Bpr5@message-set.1dps6.mongodb.net/node-angular?retryWrites=true&w=majority"
+		"mongodb+srv://Havamere:" + 
+			process.env.MONGO_ATLAS_PW + 
+			"@message-set.1dps6.mongodb.net/node-angular?retryWrites=true&w=majority"
 		, { useNewUrlParser: true,  useUnifiedTopology: true }
 		)
 		.then(() => {
@@ -58,9 +61,9 @@ app.post('/api/messages', (req, res, next) => {
 });
 
 // Texting Application
-const customerId = "73C691D6-7233-46C1-8CA8-F769ADBF32E4";
-const apiKey = "ipYLzQFmrYpFZzH5FPfarPjEzpPae9xhjlBdRuzC4qXY1i/Re+ICgo3oYlh0XLD9Y4teMbAjAWpVJ7QAC0KbgQ==";
-const rest_endpoint = "https://rest-api.telesign.com";
+const customerId = process.env.customerId;
+const apiKey = process.env.apiKey;
+const rest_endpoint = process.env.rest_endpoint;
 const timeout = 10*1000; // 10 secs
 
 const client = new TeleSignSDK( 
@@ -71,7 +74,7 @@ const client = new TeleSignSDK(
 	// userAgent
 );
 
-const phoneNumber = "14076979151";
+const phoneNumber = process.env.phoneNumber;
 const message = "";
 const messageType = "ARN";
 
@@ -97,7 +100,7 @@ app.post('/api/text', (req, res, next) => {
 	client.sms.message(messageCallback, 
 					   phoneNumber, 
 					   textMessage.name+" has messaged you.\n"
-					   	+textMessage.name+" can be reached at: "+textMessage.phoneNumber
+					   	+"They can be reached at: "+textMessage.phoneNumber
 					   	+".\n Here is their message:\n"
 					   	+textMessage.message, 
 					   messageType);

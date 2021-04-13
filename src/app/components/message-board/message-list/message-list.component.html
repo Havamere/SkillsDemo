@@ -1,4 +1,14 @@
 <div class="container" *ngIf="messages.length > 0">
+	<div class="container">
+		<div class="level is-mobile">
+			<mat-paginator class="level-item"
+				[length]="totalMessages"
+				[pageSize]="messagesPerPage"
+				[pageSizeOptions]="pageSizeOptions"
+				(page)="onChangedPage($event)">		
+			</mat-paginator>
+		</div>
+	</div>
 	<article class="message is-small {{message.color}}" *ngFor="let message of messages">
 		<div class="message-header">
 			<p>{{ message.title }}</p>
@@ -6,6 +16,10 @@
 		<div class="message-body">
 			<p>{{ message.content }}</p>
 		</div>
+		<mat-action-row>
+			<a mat-button color="primary" [routerLink]="['/message-board/edit', messageId]">EDIT</a>
+			<button mat-button color="warn" (click)="onDelete(message.id)">DELETE</button>
+		</mat-action-row>
 	</article>
 </div>
 

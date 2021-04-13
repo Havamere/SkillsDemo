@@ -2,8 +2,8 @@ const express = require('express');
 const parser = require('body-parser');
 const mongoose = require('mongoose');
 
-const Message = require('./models/message');
 const TeleSignSDK = require('telesignsdk');
+const postsRoutes = require('./routes/posts');
 
 const app = express();
 
@@ -33,32 +33,13 @@ app.use( (req, res, next) => {
 	);
 	res.setHeader(
 		"Access-Control-Allow-Methods", 
-		"GET, POST, PATCH, DELETE, OPTIONS"
+		"GET, POST, PATCH, PUT, DELETE, OPTIONS"
 	);
 	next();
 });
 
-app.get('/api/messages', (req, res, next) => {
-	Message.find()
-		   .then(documents => {
-		   		res.status(200).json({
-					response: 'Messages fetched successfully!',
-					messages: documents
-				});
-		   });
-});
+app.use("/api/posts", postsRoutes);
 
-app.post('/api/messages', (req, res, next) => {
-	const message = new Message ({
-		title: req.body.title,
-		content: req.body.content,
-		color: req.body.color
-	});
-	message.save();
-	res.status(201).json({
-		message: 'Message added successfully.'
-	});
-});
 
 // Texting Application
 const customerId = process.env.customerId;
@@ -105,7 +86,7 @@ app.post('/api/text', (req, res, next) => {
 					   	+textMessage.message, 
 					   messageType);
 	res.status(201).json({
-		message: 'Text sent successfully.'
+		response: 'Text sent successfully.'
 	})
 
 });

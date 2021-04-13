@@ -14,6 +14,6 @@ export class TextService {
 		const text: Text = {name: name,	phoneNumber: phoneNumber, message: message};
 
 		this.http.post<{text: string}>('http://localhost:3000/api/text', text)
-				 .subscribe(text => { console.log(text) }, err=> {console.log(err) });
+				 .subscribe(err=> {console.log(err) });
 	}
 }

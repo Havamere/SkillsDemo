@@ -1,28 +1,36 @@
+<mat-toolbar color="primary">
+	<span>
+		<a routerLink="/message-board/">My Messages</a>
+	</span>
+
+	<span class="spacer"></span>
+
+	<ul>
+		<li>
+			<a mat-button routerLink="/message-board/create" routerLinkActive="mat-accent">New Message</a>
+		</li>
+	</ul>
+</mat-toolbar>
+
 <div class="container message-box">
 	<h2>Enter a message to join the chat.</h2>
-	<form (submit)="onAddMessage(messageForm)" #messageForm="ngForm">
+	<form [formGroup]="form" (submit)="onSaveMessage()">
 		<input 
 			class="input is-warning" 
-			type="text" 
-			placeholder="Message Title: e.g. Hello there!" 
-			name=title
-			ngModel
-			required>
+			type="text"  
+			formControlName="title"
+			placeholder="Message Title: e.g. Hello there!">
 		<textarea 
 			class="textarea is-primary" 
-			placeholder="Message Content: e.g. General Kenobi! *lightsaber noises*" 
-			rows="6" 
-			name="content"
-			ngModel
-			required>
+			rows="4" 
+			formControlName="content" 
+			placeholder="Message Content: e.g. General Kenobi! *lightsaber noises*">
 		</textarea>
 		<hr>
 		<div class="container">
 			<p class="intro is-pulled-left"> Pick a color!:&nbsp;&nbsp;</p>
 			<div class="select is pulled-left">
-			  <select name="color" 
-			  		  ngModel
-			  		  required> 
+			  <select name="color"> 
 			  	<option *ngFor="let color of messageColorArray" 
 			  			value="{{color.value}}"
 			  			style="{{color.style}}">
@@ -34,6 +42,10 @@
 					type="Submit">
 					Save Message
 			</button>
+		</div>
+		<div>
+			<button mat-stroked-button type="button" (click)="filePicker.click()">Pick Image</button>
+			<input type="file" #filePicker(change)="onImagePicked($event)">
 		</div>
 	</form>
 </div>

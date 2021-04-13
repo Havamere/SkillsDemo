@@ -19,7 +19,6 @@ export class ContactComponent {
 
   onSendText(form: NgForm) {
     
-    console.log(form.value.name, form.value.phoneNumber, form.value.message);
     this.textService.outgoingText(form.value.name, form.value.phoneNumber, form.value.message);
     form.resetForm();
     

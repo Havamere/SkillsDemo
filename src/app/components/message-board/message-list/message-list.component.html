@@ -14,12 +14,19 @@
 			<p>{{ message.title }}</p>
 		</div>
 		<div class="message-body">
+			<div class="message-image">
+				<img [src]="message.imagePath" [alt]="message.title">
+			</div>
 			<p>{{ message.content }}</p>
 		</div>
-		<mat-action-row>
-			<a mat-button color="primary" [routerLink]="['/message-board/edit', messageId]">EDIT</a>
+		<div>
+			<button class="button is-small is-primary" [routerLink]="['/message-board/edit', message.id]">EDIT</button>
+			<button class="button is-small is-warning" (click)="onDelete(message.id)">DELETE</button>
+		</div>
+		<!-- <mat-action-row>
+			<a mat-button color="primary" [routerLink]="['/message-board/edit', message.id]">EDIT</a>
 			<button mat-button color="warn" (click)="onDelete(message.id)">DELETE</button>
-		</mat-action-row>
+		</mat-action-row> -->
 	</article>
 </div>
 

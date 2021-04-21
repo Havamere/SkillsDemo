@@ -15,25 +15,28 @@ export class MessagesService {
 	messages: Message[];
 	form: Form;
 
-	private messagesUpdated = new Subject<{messages: Message, messageCount: number}>();
+	private messagesUpdated = new Subject<{messages: Message[], messageCount: number}>();
 
 	constructor(private http: HttpClient, private router: Router) {}
 
 	getMessages(messagesPerPage: number, currentPage: number) {
-		const queryParams = '?pagesize=$(messagesPerPage)&page=$(currentPage)';
+		const queryParams = `?pagesize=${messagesPerPage}&page=${currentPage}`;
 		this.http
 			.get<{response: string, messages: any, maxMessages: number}>
 				('http://localhost:3000/api/messages' + queryParams)
 			.pipe(
 				map(messagesData => {
-					return { messages: messagesData.messages.map(message => {
-						return {
-							title: message.title,
-							content: message.content,
-							color: message.color,
-							id: message.id,
-						};
-					}), maxMessages: messagesData.maxMessages};
+					return { 
+						messages: messagesData.messages.map(message => {
+							return {
+								id: message.id,
+								title: message.title,
+								content: message.content,
+								color: message.color,
+								imagePath: message.imagePath
+							};
+						}), 
+					maxMessages: messagesData.maxMessages};
 				})
 			)
 			.subscribe((transformedMessagesData) => {
@@ -50,50 +53,57 @@ export class MessagesService {
 	}
 
 	getMessage(id: string) {
-		return this.http.get<{_id: string; title: string; content: string; color: string}>('http://localhost:3000/api/messages/' + id);
+		return this.http.get<{_id: string; title: string; content: string; color: string; imagePath: string}>(
+			'http://localhost:3000/api/messages/' + id
+		);
 	}
 
-	addMessage(title: string, content: string, color: string) {
+	addMessage(title: string, content: string, color: string, image: File) {
 
-		const message: Message = {	id: null, title: title,	content: content, color: color }
+		const messageData = new FormData();
+
+		messageData.append("title", title);
+		messageData.append("content", content);
+		messageData.append("color", color);
+		messageData.append("image", image, title);
 
 		this.http
-			.post<{message: string, messageId: string}>('http://localhost:3000/api/messages', message)
+			.post<{response: string, message: Message}>(
+				'http://localhost:3000/api/messages', 
+				messageData
+				)
 			.subscribe((responseData) => {
-			 	const message: Message = {
-			 		id: responseData.messageId,
-			 		title: title,
-			 		content: content,
-			 		color: color
-			 	}
-			 	const id = responseData.messageId;
-			 	message.id = id;
-			 	this.messages.push(message);
-				this.messagesUpdated.next([...this.messages]);
 				this.router.navigate(["/"]);
 			 })
 	}
 
-	updateMessage(id: string, title: string, content: string, color: string) {
-		const message: Message = { id: id, title: title, content: content, color: color };
+	updateMessage(id: string, title: string, content: string, color: string, image: File | string) {
+		let messageData : Message | FormData;
+		if (typeof(image) === 'object') {
+			messageData =new FormData();
+			messageData.append('id', id);
+			messageData.append("title", title);
+			messageData.append("content", content);
+			messageData.append("color", color);
+			messageData.append("image", image, title);
+		} else {
+			messageData = {
+				id: id,
+		 		title: title,
+		 		content: content,
+		 		color: color,
+		 		imagePath: image
+			};
+		}
+
 		this.http
-			.put('http://localhost:3000/api/messages/' + id, message)
+			.put('http://localhost:3000/api/messages/' + id, messageData)
 			.subscribe(response => {
-				const updatedMessages = [...this.messages];
-				const oldMessageIndex = updatedMessages.findIndex(m => m.id === message.id);
-				updatedMessages[oldMessageIndex] = message;
-				this.messages = updatedMessages;
-				this.messagesUpdated.next([...this.messages]);
 				this.router.navigate(["/"]);
 			});
 	}
 
 	deleteMessage(messageId: string) {
-		this.http.delete('http://localhost:3000/api/messages/' + messageId)
-			.subscribe(() => {
-				const updatedMessages = this.messages.filter(message => message.id !== messageId);
-				this.messages = updatedMessages;
-				this.messagesUpdated.next([...this.messages]);
-			})
+		return this.http.delete('http://localhost:3000/api/messages/' + messageId)
 	}
 }

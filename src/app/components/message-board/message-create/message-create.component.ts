@@ -5,6 +5,8 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MessagesService } from '../messages.service';
 import { MessageColorArray } from './message-colors.component';
 import { Message } from '../message.model';
+import { mimeType } from './mime-type.validator' ;
+
 
 
 @Component({
@@ -18,9 +20,10 @@ export class MessageCreateComponent {
 	enteredContent = '';
 	messageColorArray = MessageColorArray;
 	message: Message;
-	private mode = 'create';
-	private messageId: string;
 	form: FormGroup;
+	imagePreview: string;
+	private messageId: string;
+	private mode = 'create';
 
 	constructor(
 		public messagesService: MessagesService, 
@@ -38,7 +41,8 @@ export class MessageCreateComponent {
 				validators: [Validators.required]
 			}),
 			'image': new FormControl(null, {
-				validators: [Validators.required]
+				validators: [Validators.required],
+				asyncValidators: [mimeType]
 			})
 		});
 		this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -50,12 +54,15 @@ export class MessageCreateComponent {
 						id: messageData._id, 
 						title: messageData.title, 
 						content: messageData.content, 
-						color: messageData.color}
+						color: messageData.color,
+						imagePath: messageData.imagePath
+					}
 				});
 				this.form.setValue({
 					'title': this.message.title,
 					'content': this.message.content,
-					'color': this.message.color
+					'color': this.message.color,
+					'image': this.message.imagePath
 				});
 			} else {
 				this.mode = 'create';
@@ -68,6 +75,11 @@ export class MessageCreateComponent {
 		const file = (event.target as HTMLInputElement).files[0];
 		this.form.patchValue({image: file});
 		this.form.get('image').updateValueAndValidity();
+		const reader = new FileReader();
+		reader.onload = () => {
+			this.imagePreview = reader.result as string;
+		}
+		reader.readAsDataURL(file);
 	}
 
 	onSaveMessage() {
@@ -76,9 +88,18 @@ export class MessageCreateComponent {
 			return;
 		}
 		if (this.mode === 'create') {
-			this.messagesService.addMessage(this.form.value.title, this.form.value.content, this.form.value.color);
+			this.messagesService.addMessage(
+				this.form.value.title, 
+				this.form.value.content, 
+				this.form.value.color,
+				this.form.value.image);
 		} else {
-			this.messagesService.updateMessage(this.messageId, this.form.value.title, this.form.value.content, this.form.value.color);
+			this.messagesService.updateMessage(
+				this.messageId, 
+				this.form.value.title, 
+				this.form.value.content, 
+				this.form.value.color,
+				this.form.value.image);
 		}
 		this.form.reset();
 	}

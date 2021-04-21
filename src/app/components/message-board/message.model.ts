@@ -3,4 +3,5 @@ export interface Message {
 	title: string;
 	content: string;
 	color: string;
+	imagePath: string;
 }

@@ -13,7 +13,7 @@ import { MessagesService } from "../messages.service";
 export class MessageListComponent implements OnInit, OnDestroy {
 
 	messages: Message[] = [];
-	totalMessages = 10;
+	totalMessages = 0;
 	messagesPerPage = 10;
 	currentPage = 1;
 	pageSizeOptions = [3, 5, 10, 25];
@@ -24,19 +24,22 @@ export class MessageListComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.messagesService.getMessages(this.messagesPerPage, this.currentPage);
 		this.messagesSubscription = this.messagesService.getMessagesUpdateListener()
-							.subscribe((messages) => {
-								this.messages = messages;
-							});
-	}
-
-	onDelete() {
-		this.messagesSubscription.deleteMessage(messageId);
+														.subscribe((messagesData: {messages: Message[], messageCount: number}) => {
+															this.totalMessages = messagesData.messageCount;
+															this.messages = messagesData.messages;
+														});
 	}
 
 	onChangedPage(pageData: PageEvent) {
 		this.currentPage = pageData.pageIndex + 1;
 		this.messagesPerPage = pageData.pageSize;
 		this.messagesService.getMessages(this.messagesPerPage, this.currentPage);
+	}
+
+	onDelete(messageId: string) {
+		this.messagesService.deleteMessage(messageId).subscribe(() => {
+			this.messagesService.getMessages(this.messagesPerPage, this.currentPage);
+		});
 	}
 
 	ngOnDestroy() {
